@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>音色克隆工具</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 15px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        margin: 0 0 20px 0;
+        font-size: 24px;
+        color: #333;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 500;
+        color: #333;
+        font-size: 13px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 13px;
+        height: 32px;
+        box-sizing: border-box;
+      }
+      textarea {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 13px;
+        min-height: 80px;
+        resize: vertical;
+        box-sizing: border-box;
+      }
+      .audio-section {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        height: 32px;
+        line-height: 1;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+      .submit-button {
+        background-color: #28a745;
+        margin-top: 10px;
+        width: 100%;
+        height: 36px;
+      }
+      .submit-button:hover {
+        background-color: #218838;
+      }
+      .api-config {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      input[type="file"] {
+        font-size: 13px;
+      }
+      /* Loading样式 */
+      .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+      .loading-content {
+        background-color: white;
+        padding: 20px 40px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading提示 -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div id="loadingText">处理中...</div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>音色克隆工具</h1>
+      <form id="voiceCloneForm">
+        <div class="api-config">
+          <div class="form-group">
+            <label for="whisperId">Whisper ID</label>
+            <input type="text" id="whisperId" name="whisperId" required />
+          </div>
+          <div class="form-group">
+            <label for="whisperKey">Whisper Key</label>
+            <input type="text" id="whisperKey" name="whisperKey" required />
+          </div>
+          <div class="form-group">
+            <label for="cosyvoiceId">Cosyvoice ID</label>
+            <input type="text" id="cosyvoiceId" name="cosyvoiceId" required />
+          </div>
+          <div class="form-group">
+            <label for="cosyvoiceKey">Cosyvoice Key</label>
+            <input type="text" id="cosyvoiceKey" name="cosyvoiceKey" required />
+          </div>
+        </div>
+
+        <div class="audio-section">
+          <div class="form-group" style="flex-grow: 1">
+            <label for="sampleAudio">样本音频（音色来源）</label>
+            <input
+              type="file"
+              id="sampleAudio"
+              name="sampleAudio"
+              accept="audio/*"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sampleText">样本音频文案</label>
+          <textarea id="sampleText" name="sampleText" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="targetText">需要生成音频的文案</label>
+          <textarea id="targetText" name="targetText" required></textarea>
+        </div>
+
+        <button type="submit" class="button submit-button">生成音频</button>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
