@@ -28,7 +28,7 @@
 
 ## 部署
 
-本项目已部署在 Vercel 上，访问地址：[音色克隆工具](https://voice-clone.vercel.app)
+本项目已部署在 Vercel 上，访问地址：[音色克隆工具](https://voice-clone-flax.vercel.app/)
 
 ## 本地开发
 
